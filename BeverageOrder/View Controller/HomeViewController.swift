@@ -104,16 +104,16 @@ class HomeViewController: UIViewController {
                 }
             }else{
                 self.groupNameTextField.text = ""
-                self.pickerField.resignFirstResponder()
+                self.pickerField?.resignFirstResponder()
             }
         }else{
             DispatchQueue.main.async {
-                self.pickerField.resignFirstResponder()
+                self.pickerField?.resignFirstResponder()
             }
         }
     }
     @objc func cancelSelection(){
-        self.pickerField.resignFirstResponder()
+        self.pickerField?.resignFirstResponder()
     }
     @IBAction func goToOrder(_ sender: UIButton) {
         guard let selectedGroup = groupNameTextField.text else {return}
@@ -136,7 +136,7 @@ class HomeViewController: UIViewController {
         }
     }
     @IBAction func newGroup(_ sender: Any) {
-        pickerField.resignFirstResponder()
+        pickerField?.resignFirstResponder()
         Tool.shared.confirmAction(in: self, withTitle: "請輸入你的班期", withPlaceholder: "ex:iOSApp程式設計入門彼得潘第16期") { [self] (confirm, groupName) in
             guard let groupName = groupName else {return}
 print("groupName = \(groupName)")

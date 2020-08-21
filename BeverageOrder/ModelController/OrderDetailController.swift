@@ -8,8 +8,8 @@
 import Foundation
 struct OrderDetailController {
     static let shared = OrderDetailController()
-    var baseUrlString = "https://sheetdb.io/api/v1/qfkcavuwvptm5"
-    var baseRequest = URLRequest(url: URL(string: "https://sheetdb.io/api/v1/qfkcavuwvptm5")!)
+    var baseUrlString = "https://sheetdb.io/api/v1/tvb0f1u7y5fke"
+    var baseRequest = URLRequest(url: URL(string: "https://sheetdb.io/api/v1/tvb0f1u7y5fke")!)
     
     func submitOrderDetail(with orderData: OrderData, completionHandler: @escaping(Bool?) -> Void){
         var request = baseRequest
