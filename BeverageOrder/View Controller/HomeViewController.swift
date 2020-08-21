@@ -141,13 +141,10 @@ class HomeViewController: UIViewController {
             guard let groupName = groupName else {return}
 print("groupName = \(groupName)")
             if confirm {
-                print("checkIfSameDate(with: groupName, and: Tool.shared.formatDate(with: Date()) = \(checkIfSameDate(with: groupName, and: Tool.shared.formatDate(with: Date())))")
                 if groupName == "" {
                     Tool.shared.showAlert(in: self, with: "請輸入班期名稱")
                 }else if groupList.contains(groupName) {
                     Tool.shared.showAlert(in: self, with: "班期名稱重複，請重新輸入")
-                }else if checkIfSameDate(with: groupName, and: Tool.shared.formatDate(with: Date())){
-                    Tool.shared.showAlert(in: self, with: "今天已經用這個名稱訂過飲料囉！換個名稱吧！")
                 }else{
                     self.performSegue(withIdentifier: "chooseShop", sender: groupName)
                 }
@@ -156,17 +153,6 @@ print("groupName = \(groupName)")
             }
             
         }
-    }
-    func checkIfSameDate(with groupName: String, and date: String) -> Bool{
-        var ifSameDate = false
-        for groupDetail in finishedGroupDetails {
-            if groupDetail.groupName == groupName {
-                if groupDetail.orderDate == date {
-                    ifSameDate = true
-                }
-            }
-        }
-        return ifSameDate
     }
     @IBAction func finishOrder(_ sender: UIBarButtonItem) {
         guard let selectedGroup = groupNameTextField.text else {return}

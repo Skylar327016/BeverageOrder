@@ -76,7 +76,12 @@ class OrderViewController: UIViewController {
 print("orderDate in create = \(orderDate)")
             var price: String{
                 if extraBubbleSwitch.isOn{
-                    return "\(beverageList[beverageSelection].price + 5)"
+                    if groupDetail.shopName == "五十嵐" || groupDetail.shopName == "可不可熟成紅茶" || groupDetail.shopName == "迷客夏" {
+                        return "\(beverageList[beverageSelection].price + 10)"
+                    }else {
+                        return "\(beverageList[beverageSelection].price + 5)"
+                    }
+                    
                 }else{
                     return "\(beverageList[beverageSelection].price)"
                 }

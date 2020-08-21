@@ -48,14 +48,12 @@ print("finishedGroupDetails = \(finishedGroupDetails)")
             if groupDetails.count == 0 {
                 let groupName = orderDetail.groupName
                 let shopName = orderDetail.shopName
-                let orderDate = orderDetail.orderDate
-                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName, orderDate: orderDate)
+                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName)
                 groupDetails.append(groupDetail)
             }else{
                 let groupName = orderDetail.groupName
                 let shopName = orderDetail.shopName
-                let orderDate = orderDetail.orderDate
-                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName, orderDate: orderDate)
+                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName)
                 for i in 0...groupDetails.count - 1 {
                     if groupDetail == groupDetails[i] {
                         break
