@@ -31,14 +31,10 @@ struct BeverageController{
             shopFileName = ""
         }
         let beverageUrl = Bundle.main.url(forResource: "\(shopFileName)", withExtension: "plist")!
-print("選到的\(shopFileName)已置入url")
         if let data = try? Data(contentsOf: beverageUrl){
             guard let beverageList = try? PropertyListDecoder().decode([Beverage].self, from: data) else{return}
-print("產生的list\(beverageList)")
             completionHandler(beverageList)
-            print("\(shopName)共有\(beverageList.count)筆資料")
         }else{
-print("讀取data失敗")
             completionHandler(nil)
         }
     }

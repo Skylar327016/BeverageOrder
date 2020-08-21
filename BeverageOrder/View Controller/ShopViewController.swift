@@ -76,7 +76,7 @@ extension ShopViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedShop = shops[indexPath.row]
-        let groupDetail = GroupDetail(groupName: groupName, shopName: selectedShop.shopName)
+        let groupDetail = GroupDetail(groupName: groupName, shopName: selectedShop.shopName, orderDate: Tool.shared.formatDate(with: Date()))
         performSegue(withIdentifier: "goToOrder", sender: groupDetail)
     }
     

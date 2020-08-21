@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
     var stillLoadingOrNot: Bool!
     var pickerField:UITextField!
     var groupDetails = [GroupDetail]()
+    var finishedGroupDetails = [GroupDetail]()
     var groupList = [String]()
     var groupSelection:Int!
     var unfinishedOrderDetails:[OrderDetail]!
@@ -30,14 +31,21 @@ class HomeViewController: UIViewController {
         loadGroupDetailsAndGroupList()
         groupNameTextField.text  = ""
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        pickerField?.resignFirstResponder()
+    }
     func loadGroupDetailsAndGroupList(){ 
         groupList.removeAll()
         groupList.append("請選擇班期")
-        OrderDetailController.shared.fetchOrderDetails { (unfinishedOrderDetails, _) in
+        OrderDetailController.shared.fetchOrderDetails { (unfinishedOrderDetails, funishedOrderDetails) in
             guard let unfinishedOrderDetails = unfinishedOrderDetails else {return}
+            guard let finishedOrderDetails = funishedOrderDetails else {return}
             self.unfinishedOrderDetails = unfinishedOrderDetails
-            GroupDetailController.shared.fetchGroupDetail(with: unfinishedOrderDetails) { [self] (groupDetails) in
+
+            GroupDetailController.shared.fetchGroupDetail(with: unfinishedOrderDetails, and: finishedOrderDetails) { [self] (groupDetails, finishedGroupDetails) in
                 guard let groupDetails = groupDetails else {return}
+                guard let finishedGroupDetails = finishedGroupDetails else {return}
+                self.finishedGroupDetails = finishedGroupDetails
                 self.groupDetails = groupDetails
                 stillLoadingOrNot = false
                 DispatchQueue.main.async { [self] in
@@ -115,14 +123,19 @@ class HomeViewController: UIViewController {
         }
     }
     @IBAction func newGroup(_ sender: Any) {
+        pickerField.resignFirstResponder()
         Tool.shared.confirmAction(in: self, withTitle: "請輸入你的班期", withPlaceholder: "ex:iOSApp程式設計入門彼得潘第16期") { [self] (confirm, groupName) in
             guard let groupName = groupName else {return}
+print("groupName = \(groupName)")
             if confirm {
+                print("checkIfSameDate(with: groupName, and: Tool.shared.formatDate(with: Date()) = \(checkIfSameDate(with: groupName, and: Tool.shared.formatDate(with: Date())))")
                 if groupName == "" {
                     Tool.shared.showAlert(in: self, with: "請輸入班期名稱")
-                }else if groupList.contains(groupName){
+                }else if groupList.contains(groupName) {
                     Tool.shared.showAlert(in: self, with: "班期名稱重複，請重新輸入")
-                }else {
+                }else if checkIfSameDate(with: groupName, and: Tool.shared.formatDate(with: Date())){
+                    Tool.shared.showAlert(in: self, with: "今天已經用這個名稱訂過飲料囉！換個名稱吧！")
+                }else{
                     self.performSegue(withIdentifier: "chooseShop", sender: groupName)
                 }
             }else{
@@ -130,6 +143,17 @@ class HomeViewController: UIViewController {
             }
             
         }
+    }
+    func checkIfSameDate(with groupName: String, and date: String) -> Bool{
+        var ifSameDate = false
+        for groupDetail in finishedGroupDetails {
+            if groupDetail.groupName == groupName {
+                if groupDetail.orderDate == date {
+                    ifSameDate = true
+                }
+            }
+        }
+        return ifSameDate
     }
     @IBAction func finishOrder(_ sender: UIBarButtonItem) {
         guard let selectedGroup = groupNameTextField.text else {return}
@@ -151,6 +175,7 @@ print("willFinishOrderDetails = \(willFinishOrderDetails)")
                                 if count == countWillReach {
                                     DispatchQueue.main.async {
                                         Tool.shared.showAlert(in: self, with: "已產生訂購單")
+                                        groupNameTextField.text = ""
                                     }
                                 }
                             }

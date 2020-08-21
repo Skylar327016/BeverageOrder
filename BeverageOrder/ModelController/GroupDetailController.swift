@@ -8,18 +8,54 @@
 import Foundation
 struct GroupDetailController {
     static let shared = GroupDetailController()
-    func fetchGroupDetail(with orderDetails: [OrderDetail], completionHandler: @escaping ([GroupDetail]?) -> Void) {
+    func fetchGroupDetail(with unFinishedOrderDetails: [OrderDetail],and finishedOrderDetails: [OrderDetail], completionHandler: @escaping ([GroupDetail]?, [GroupDetail]?) -> Void) {
+        let unFinishedGroupDetails = turnToGroupDetails(with: unFinishedOrderDetails)
+        let finishedGroupDetails = turnToGroupDetails(with: finishedOrderDetails)
+print("unFinishedGroupDetails = \(unFinishedGroupDetails)")
+print("finishedGroupDetails = \(finishedGroupDetails)")
+        completionHandler(unFinishedGroupDetails, finishedGroupDetails )
+        
+        /*
+        var unFinishedGroupDetails = [GroupDetail]()
+        //var finishedGroupDetails = [GroupDetail]()
+        for orderDetail in unFinishedOrderDetails {
+            if unFinishedGroupDetails.count == 0 {
+                let groupName = orderDetail.groupName
+                let shopName = orderDetail.shopName
+                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName)
+                unFinishedGroupDetails.append(groupDetail)
+            }else{
+                let groupName = orderDetail.groupName
+                let shopName = orderDetail.shopName
+                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName)
+                for i in 0...unFinishedGroupDetails.count - 1 {
+                    if groupDetail == unFinishedGroupDetails[i] {
+                        break
+                    }else if i == unFinishedGroupDetails.count - 1 {
+                        unFinishedGroupDetails.append(groupDetail)
+                    }
+                }
+            }
+        }
+        completionHandler(unFinishedGroupDetails,nil)
+        */
+    }
+    
+    
+    func turnToGroupDetails(with orderDetails:[OrderDetail]) -> [GroupDetail] {
         var groupDetails = [GroupDetail]()
         for orderDetail in orderDetails {
             if groupDetails.count == 0 {
                 let groupName = orderDetail.groupName
                 let shopName = orderDetail.shopName
-                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName)
+                let orderDate = orderDetail.orderDate
+                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName, orderDate: orderDate)
                 groupDetails.append(groupDetail)
             }else{
                 let groupName = orderDetail.groupName
                 let shopName = orderDetail.shopName
-                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName)
+                let orderDate = orderDetail.orderDate
+                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName, orderDate: orderDate)
                 for i in 0...groupDetails.count - 1 {
                     if groupDetail == groupDetails[i] {
                         break
@@ -29,9 +65,9 @@ struct GroupDetailController {
                 }
             }
         }
-        completionHandler(groupDetails)
+        return groupDetails
     }
-    
+ 
     func finishOrderDetails(with groupDetail:GroupDetail, and unfinishedOrderDetails: [OrderDetail], completionHandler: @escaping ([OrderDetail]?) -> Void) {
         let groupName = groupDetail.groupName
         let shopName = groupDetail.shopName

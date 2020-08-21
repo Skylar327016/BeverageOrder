@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17147" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mwB-mr-gLO">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17120"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -496,7 +497,7 @@
         <scene sceneID="nAT-i0-Len">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aoZ-Pf-axS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="修改訂單" image="list.bullet.rectangle" catalog="system" id="o4N-Yp-POr"/>
+                    <tabBarItem key="tabBarItem" title="修改訂單" image="folder" id="o4N-Yp-POr"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Vbe-uh-g41">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -884,7 +885,7 @@
         <scene sceneID="awQ-pZ-OK5">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2Nq-am-4wx" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="訂購單" image="heart.text.square" catalog="system" id="XSI-dI-ERW"/>
+                    <tabBarItem key="tabBarItem" title="訂購單" image="book" id="XSI-dI-ERW"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="rN3-EJ-7PW">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -1004,9 +1005,9 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Peter" width="200" height="303"/>
+        <image name="book" width="32" height="32"/>
         <image name="doc" catalog="system" width="115" height="128"/>
-        <image name="heart.text.square" catalog="system" width="128" height="114"/>
-        <image name="list.bullet.rectangle" catalog="system" width="128" height="93"/>
+        <image name="folder" width="32" height="32"/>
         <image name="logo" width="204" height="236"/>
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <systemColor name="systemBackgroundColor">
