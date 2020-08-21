@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
     var finishedGroupDetails = [GroupDetail]()
     var groupList = [String]()
     var groupSelection:Int!
-    var unfinishedOrderDetails:[OrderDetail]!
+    var unfinishedOrderDetails = [OrderDetail]()
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingView = Tool.shared.setLoadingView(in: self, with: loadingView)
@@ -38,11 +38,24 @@ class HomeViewController: UIViewController {
         groupList.removeAll()
         groupList.append("請選擇班期")
         OrderDetailController.shared.fetchOrderDetails { (unfinishedOrderDetails, funishedOrderDetails) in
-            guard let unfinishedOrderDetails = unfinishedOrderDetails else {return}
-            guard let finishedOrderDetails = funishedOrderDetails else {return}
+            guard let unfinishedOrderDetails = unfinishedOrderDetails else {
+                self.stillLoadingOrNot = false
+                DispatchQueue.main.async { [self] in
+                    Tool.shared.loading(activity: loadingView, is: stillLoadingOrNot)
+                }
+                return
+            }
+            guard let finishedOrderDetails = funishedOrderDetails else {
+                self.stillLoadingOrNot = false
+                DispatchQueue.main.async { [self] in
+                    Tool.shared.loading(activity: loadingView, is: stillLoadingOrNot)
+                }
+                return
+            }
             self.unfinishedOrderDetails = unfinishedOrderDetails
 
             GroupDetailController.shared.fetchGroupDetail(with: unfinishedOrderDetails, and: finishedOrderDetails) { [self] (groupDetails, finishedGroupDetails) in
+                
                 guard let groupDetails = groupDetails else {return}
                 guard let finishedGroupDetails = finishedGroupDetails else {return}
                 self.finishedGroupDetails = finishedGroupDetails

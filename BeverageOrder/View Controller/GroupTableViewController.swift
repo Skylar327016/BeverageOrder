@@ -28,9 +28,20 @@ class GroupTableViewController: UITableViewController {
     }
     func loadFinishedGroupDetails(){
         OrderDetailController.shared.fetchOrderDetails { [self] (_, finishedOrderDetails) in
-            guard let finishedOrderDetails = finishedOrderDetails else {return}
+            guard let finishedOrderDetails = finishedOrderDetails, finishedOrderDetails.count > 0 else {
+                stillLoadingOrNot = false
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    Tool.shared.loading(activity: loadingView, is: stillLoadingOrNot)
+                }
+                return
+            }
             OrderController.shared.getOrders(from: finishedOrderDetails) { (orders) in
-                guard let orders = orders else {return}
+                guard let orders = orders else {
+                    stillLoadingOrNot = false
+                    Tool.shared.loading(activity: loadingView, is: stillLoadingOrNot)
+                    return
+                }
                 self.orders = orders
                 stillLoadingOrNot = false
 print("orders = \(orders)")
