@@ -19,7 +19,7 @@ class HeaderTableViewCell: UITableViewCell {
         line.layer.cornerRadius = 2
         let title = total.beverageName
         let number = total.totalNumber
-        titleLabel.text =  "\(title)共\(number)杯"
+        titleLabel.text =  "\(title) 共\(number)杯"
     }
     
 

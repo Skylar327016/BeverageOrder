@@ -11,7 +11,6 @@ class OrderDetailTableViewCell: UITableViewCell {
     
     
     @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var orderDateLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var groupNameLabel: UILabel!
     

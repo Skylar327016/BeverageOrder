@@ -42,7 +42,6 @@ class OrderDetailViewController: UIViewController {
         let potentialOrderDetail = filteredOrderDetails[row]
         guard let logoImage = UIImage(named: "\(potentialOrderDetail.shopName)") else {return}
         cell.logoImageView.image = logoImage
-        cell.orderDateLabel.text = potentialOrderDetail.orderDate
         cell.groupNameLabel.text = potentialOrderDetail.groupName
         cell.nameLabel.text = potentialOrderDetail.name
         cell.selectionStyle = .none

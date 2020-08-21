@@ -7,9 +7,7 @@
 
 import Foundation
 struct Total: Equatable {
-    var orderDate: String {
-        return subtotals[0].orderDate
-    }
+
     var groupName: String {
         return subtotals[0].groupName
     }
@@ -38,7 +36,7 @@ struct Total: Equatable {
         return totalPrice
     }
     static func == (lhs: Total, rhs: Total) -> Bool {
-        if lhs.orderDate == rhs.orderDate && lhs.groupName == rhs.groupName && lhs.shopName == rhs.shopName && lhs.isFinished == rhs.isFinished {
+        if lhs.groupName == rhs.groupName && lhs.shopName == rhs.shopName && lhs.isFinished == rhs.isFinished {
             return true
         }else {
             return false

@@ -57,13 +57,10 @@ print("orders[0] = \(orders[0].orderDetails)")
 
     func configure(with orders: [Order],for cell: GroupTableViewCell, at row:Int){
         let order = orders[row]
-        cell.dateTitleLabel.text = "訂購日期："
-        cell.nameTitleLabel.text = "班期："
+        cell.nameTitleLabel.text = "班期名稱："
         guard let logoImage = UIImage(named: "\(order.shopName)") else {return}
         cell.logoImageView.image = logoImage
-        cell.orderDateLabel.text = order.orderDate
         cell.groupNameLabel.text = order.groupName
-        cell.orderDateLabel.isHidden = false
         cell.logoImageView.layer.cornerRadius = cell.logoImageView.frame.width / 2
         cell.selectionStyle = .none
         cell.accessoryType = .disclosureIndicator
@@ -91,7 +88,6 @@ print("orders[0] = \(orders[0].orderDetails)")
         if orders.count == 0{
             cell.logoImageView.image = UIImage(named: "Peter")
             cell.groupNameLabel.text = "尚無訂購紀錄"
-            cell.orderDateLabel.isHidden = true
             cell.accessoryType = .none
             cell.selectionStyle = .none
         }else {

@@ -18,11 +18,10 @@ struct OrderDetail: Codable, Equatable {
     var icePreference: String
     var extraBubble: String
     var price: String
-    var orderDate: String
     var isFinished: String
      
     static func == (lhs: OrderDetail, rhs: OrderDetail) -> Bool {
-        if lhs.groupName == rhs.groupName && lhs.shopName == rhs.shopName  && lhs.beverageName == rhs.beverageName && lhs.sugarPreference == rhs.sugarPreference && lhs.icePreference == rhs.icePreference && lhs.extraBubble == rhs.extraBubble && lhs.price == rhs.price && lhs.orderDate == rhs.orderDate && lhs.isFinished == rhs.isFinished {
+        if lhs.groupName == rhs.groupName && lhs.shopName == rhs.shopName  && lhs.beverageName == rhs.beverageName && lhs.sugarPreference == rhs.sugarPreference && lhs.icePreference == rhs.icePreference && lhs.extraBubble == rhs.extraBubble && lhs.price == rhs.price && lhs.isFinished == rhs.isFinished {
             return true
         }else {
             return false

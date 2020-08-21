@@ -34,7 +34,7 @@ struct OrderController {
     }
     
     func isTheSameOrder(lhs:OrderDetail, rhs: OrderDetail) -> Bool {
-        if lhs.groupName == rhs.groupName && lhs.shopName == rhs.shopName && lhs.orderDate == rhs.orderDate {
+        if lhs.groupName == rhs.groupName && lhs.shopName == rhs.shopName  {
             return true
         }else {
             return false

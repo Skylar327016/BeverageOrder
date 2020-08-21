@@ -14,7 +14,5 @@ struct Order: Equatable {
     var shopName: String {
         return orderDetails[0].shopName
     }
-    var orderDate: String {
-        return orderDetails[0].orderDate
-    }
+    
 }

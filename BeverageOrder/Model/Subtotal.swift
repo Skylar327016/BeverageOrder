@@ -23,9 +23,6 @@ struct Subtotal: Codable, Equatable {
     var shopName: String {
         return orderDetails[0].shopName
     }
-    var orderDate: String {
-        return orderDetails[0].orderDate
-    }
     var isFinished: String {
         return orderDetails[0].isFinished
     }
@@ -41,7 +38,7 @@ struct Subtotal: Codable, Equatable {
         return subtotalPrice
     }
     static func == (lhs: Subtotal, rhs: Subtotal) -> Bool {
-        if lhs.groupName == rhs.groupName && lhs.beverageName == rhs.beverageName && lhs.orderDate == rhs.orderDate && lhs.isFinished == lhs.isFinished {
+        if lhs.groupName == rhs.groupName && lhs.beverageName == rhs.beverageName && lhs.isFinished == lhs.isFinished {
             return true
         }else { return false}
     }
