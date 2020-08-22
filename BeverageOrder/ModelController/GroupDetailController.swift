@@ -15,30 +15,6 @@ print("unFinishedGroupDetails = \(unFinishedGroupDetails)")
 print("finishedGroupDetails = \(finishedGroupDetails)")
         completionHandler(unFinishedGroupDetails, finishedGroupDetails )
         
-        /*
-        var unFinishedGroupDetails = [GroupDetail]()
-        //var finishedGroupDetails = [GroupDetail]()
-        for orderDetail in unFinishedOrderDetails {
-            if unFinishedGroupDetails.count == 0 {
-                let groupName = orderDetail.groupName
-                let shopName = orderDetail.shopName
-                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName)
-                unFinishedGroupDetails.append(groupDetail)
-            }else{
-                let groupName = orderDetail.groupName
-                let shopName = orderDetail.shopName
-                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName)
-                for i in 0...unFinishedGroupDetails.count - 1 {
-                    if groupDetail == unFinishedGroupDetails[i] {
-                        break
-                    }else if i == unFinishedGroupDetails.count - 1 {
-                        unFinishedGroupDetails.append(groupDetail)
-                    }
-                }
-            }
-        }
-        completionHandler(unFinishedGroupDetails,nil)
-        */
     }
     
     
@@ -48,12 +24,14 @@ print("finishedGroupDetails = \(finishedGroupDetails)")
             if groupDetails.count == 0 {
                 let groupName = orderDetail.groupName
                 let shopName = orderDetail.shopName
-                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName)
+                let password = orderDetail.password
+                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName, password: password)
                 groupDetails.append(groupDetail)
             }else{
                 let groupName = orderDetail.groupName
                 let shopName = orderDetail.shopName
-                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName)
+                let password = orderDetail.password
+                let groupDetail = GroupDetail(groupName: groupName, shopName: shopName, password: password)
                 for i in 0...groupDetails.count - 1 {
                     if groupDetail == groupDetails[i] {
                         break

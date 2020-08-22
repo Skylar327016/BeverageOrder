@@ -57,7 +57,7 @@ class UpdateOrderViewController: UIViewController {
                     return "\(beverageList[beverageSelection].price)"
                 }
             }
-            let orderDetail = OrderDetail(groupName: groupName, shopName: shopName, name: name, beverageName: beverageName, sugarPreference: sugarPreference, icePreference: icePreference, extraBubble: extraBubble, price: price, isFinished: "FALSE")
+            let orderDetail = OrderDetail(groupName: groupName, shopName: shopName, password: orderDetailWillUpdate.password, name: name, beverageName: beverageName, sugarPreference: sugarPreference, icePreference: icePreference, extraBubble: extraBubble, price: price, isFinished: "FALSE")
             orderData.data.append(orderDetail)
             OrderDetailController.shared.updateOrderDetail(with: orderData) { [self] (success) in
                 guard let success = success else {return}

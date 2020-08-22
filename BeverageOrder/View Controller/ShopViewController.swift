@@ -10,6 +10,7 @@ import UIKit
 class ShopViewController: UIViewController {
     
     var groupName:String!
+    var password: String!
     var shops = [Shop]()
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -76,7 +77,7 @@ extension ShopViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedShop = shops[indexPath.row]
-        let groupDetail = GroupDetail(groupName: groupName, shopName: selectedShop.shopName)
+        let groupDetail = GroupDetail(groupName: groupName, shopName: selectedShop.shopName, password: password)
         performSegue(withIdentifier: "goToOrder", sender: groupDetail)
     }
     

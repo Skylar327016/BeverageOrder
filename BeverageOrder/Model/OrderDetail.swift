@@ -12,6 +12,7 @@ struct OrderData: Codable {
 struct OrderDetail: Codable, Equatable {
     var groupName: String
     var shopName: String
+    var password: String
     var name: String
     var beverageName: String
     var sugarPreference: String

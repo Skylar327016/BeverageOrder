@@ -47,19 +47,25 @@ struct Tool {
         viewController.present(controller, animated: true, completion: nil)
     }
     
-    func confirmAction(in viewController: UIViewController, withTitle title: String, withPlaceholder placeholder: String, completionHandler: @escaping (Bool,String?) -> Void){
+    func confirmAction(in viewController: UIViewController, withTitle title: String, andPlaceholders placeHolders: [String],completionHandler: @escaping (Bool, [String]?) -> Void){
         let controller = UIAlertController(title: nil, message: title, preferredStyle: .alert)
-        controller.addTextField { (textField) in
-            textField.placeholder = placeholder
+        for placeholder in placeHolders {
+            controller.addTextField { (textField) in
+                textField.placeholder = placeholder
+            }
         }
         controller.addAction(UIAlertAction(title: "確定", style: .default, handler: { (_) in
             viewController.dismiss(animated: true, completion: nil)
-            guard let groupName = controller.textFields![0].text else {return}
-            completionHandler(true, groupName)
+            var inputs = [String]()
+            guard let textFields = controller.textFields else {return}
+            for textField in textFields {
+                inputs.append(textField.text!)
+            }
+            completionHandler(true, inputs)
         }))
         controller.addAction(UIAlertAction(title: "取消", style: .default, handler: { (_) in
             viewController.dismiss(animated: true, completion: nil)
-            completionHandler(false,nil)
+            completionHandler(false, nil)
         }))
         viewController.present(controller, animated: true, completion: nil)
     }

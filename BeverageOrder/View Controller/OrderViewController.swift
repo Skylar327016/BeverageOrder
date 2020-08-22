@@ -86,7 +86,7 @@ print("orderDate in create = \(orderDate)")
                     return "\(beverageList[beverageSelection].price)"
                 }
             }
-            let orderDetail = OrderDetail(groupName: groupDetail.groupName, shopName: groupDetail.shopName, name: name, beverageName: beverageName, sugarPreference: sugarPreference, icePreference: icePreference, extraBubble: extraBubble, price: price, isFinished: "FALSE")
+            let orderDetail = OrderDetail(groupName: groupDetail.groupName, shopName: groupDetail.shopName, password: groupDetail.password, name: name, beverageName: beverageName, sugarPreference: sugarPreference, icePreference: icePreference, extraBubble: extraBubble, price: price, isFinished: "FALSE")
             orderData.data.append(orderDetail)
 print("orderDetail before upload = \(orderDetail)")
             OrderDetailController.shared.submitOrderDetail(with: orderData) { [self] (success) in

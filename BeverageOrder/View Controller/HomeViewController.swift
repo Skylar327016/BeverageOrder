@@ -130,51 +130,69 @@ class HomeViewController: UIViewController {
             guard let controller = segue.destination as? OrderViewController else {return}
             controller.groupDetail = groupDetail
         }else if segue.identifier == "chooseShop" {
-            guard let groupName = sender as? String else {return}
+            guard let groupDictionary = sender as? [String:String] else {return}
             guard let controller = segue.destination as? ShopViewController else {return}
-            controller.groupName = groupName
+            controller.groupName = groupDictionary["groupName"]
+            controller.password = groupDictionary["password"]
         }
     }
     @IBAction func newGroup(_ sender: Any) {
         pickerField?.resignFirstResponder()
-        Tool.shared.confirmAction(in: self, withTitle: "請輸入你的班期", withPlaceholder: "ex:iOSApp程式設計入門彼得潘第16期") { [self] (confirm, groupName) in
-            guard let groupName = groupName else {return}
-print("groupName = \(groupName)")
+        let placeHolders = ["ex:iOSApp程式設計入門彼得潘第16期","密碼"]
+        Tool.shared.confirmAction(in: self, withTitle: "請輸入你的團訂名稱及密碼", andPlaceholders: placeHolders) { [self] (confirm, inputs) in
+            guard let inputs = inputs else {return}
+            let groupName = inputs[0]
+            let password = inputs[1]
             if confirm {
                 if groupName == "" {
-                    Tool.shared.showAlert(in: self, with: "請輸入班期名稱")
+                    Tool.shared.showAlert(in: self, with: "請輸入團訂名稱")
+                }else if password == "" {
+                    Tool.shared.showAlert(in: self, with: "請輸入密碼")
                 }else if groupList.contains(groupName) {
                     Tool.shared.showAlert(in: self, with: "班期名稱重複，請重新輸入")
                 }else{
-                    self.performSegue(withIdentifier: "chooseShop", sender: groupName)
+                    var groupDictionary = [String:String]()
+                    groupDictionary["groupName"] = groupName
+                    groupDictionary["password"] = password
+                    self.performSegue(withIdentifier: "chooseShop", sender: groupDictionary)
                 }
             }else{
                 self.dismiss(animated: true, completion: nil)
             }
-            
         }
+        
+
     }
     @IBAction func finishOrder(_ sender: UIBarButtonItem) {
         guard let selectedGroup = groupNameTextField.text else {return}
         if selectedGroup == "" {
-            Tool.shared.showAlert(in: self, with: "請選擇班期！")
+            Tool.shared.showAlert(in: self, with: "請選擇團訂名稱！")
         }else if groupList.contains(selectedGroup){
             let willEndGroupDetail = groupDetails[groupSelection - 1]
-            Tool.shared.confirmAction(in: self, with: "結束團訂後將無法修改訂單資料，確定要結束嗎？") { [self] (confirm) in
-                if confirm {
-                    GroupDetailController.shared.finishOrderDetails(with: willEndGroupDetail, and: unfinishedOrderDetails) { (willFinishOrderDetails) in
-print("willFinishOrderDetails = \(willFinishOrderDetails)")
-                        guard let willFinishOrderDetails = willFinishOrderDetails else {return}
-                        var count = 0
-                        let countWillReach = willFinishOrderDetails.count
-                        willFinishOrderDetails.forEach { (orderDetail) in
-                            let orderData = OrderData(data: [orderDetail])
-                            OrderDetailController.shared.updateOrderDetail(with: orderData) { (_) in
-                                count += 1
-                                if count == countWillReach {
-                                    DispatchQueue.main.async {
-                                        Tool.shared.showAlert(in: self, with: "已產生訂購單")
-                                        groupNameTextField.text = ""
+            let placeholders = ["請輸入團訂密碼"]
+            Tool.shared.confirmAction(in: self, withTitle: "結束團訂後將無法修改訂單資料，確定要結束嗎？", andPlaceholders: placeholders) { [self] (confirm, inputs) in
+                guard let inputs = inputs else { return}
+                let password = inputs[0]
+                if password == "" {
+                    Tool.shared.showAlert(in: self, with: "請輸入團訂密碼")
+                }else if password != willEndGroupDetail.password {
+                    Tool.shared.showAlert(in: self, with: "密碼輸入錯誤，請重新輸入")
+                }else{
+                    if confirm {
+                        GroupDetailController.shared.finishOrderDetails(with: willEndGroupDetail, and: unfinishedOrderDetails) { (willFinishOrderDetails) in
+    print("willFinishOrderDetails = \(willFinishOrderDetails)")
+                            guard let willFinishOrderDetails = willFinishOrderDetails else {return}
+                            var count = 0
+                            let countWillReach = willFinishOrderDetails.count
+                            willFinishOrderDetails.forEach { (orderDetail) in
+                                let orderData = OrderData(data: [orderDetail])
+                                OrderDetailController.shared.updateOrderDetail(with: orderData) { (_) in
+                                    count += 1
+                                    if count == countWillReach {
+                                        DispatchQueue.main.async {
+                                            Tool.shared.showAlert(in: self, with: "已產生訂購單")
+                                            groupNameTextField.text = ""
+                                        }
                                     }
                                 }
                             }
@@ -183,7 +201,6 @@ print("willFinishOrderDetails = \(willFinishOrderDetails)")
                 }
             }
         }
-        
     }
     
 
